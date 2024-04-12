@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="01" author="mirsaitov_gr">
+        <createTable tableName="addresses"
+                     remarks="Addresses table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="location" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="persons"
+                     remarks="Persons table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="persons"
+                                 constraintName="fk_persons_address_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="addresses"/>
+        <createTable tableName="categories"
+                     remarks="Categories table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="countries"
+                     remarks="Countries table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="producers"
+                     remarks="Producers table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="producers"
+                                 constraintName="fk_producers_country_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+        <createTable tableName="items"
+                     remarks="Items table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="producer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="items"
+                                 constraintName="fk_items_category_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="categories"/>
+        <addForeignKeyConstraint baseColumnNames="producer_id"
+                                 baseTableName="items"
+                                 constraintName="fk_items_producer_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="producers"/>
+        <createTable tableName="delivery_types"
+                     remarks="Deliveries type table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="type" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="orders"
+                     remarks="Orders table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="person_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_type_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="delivery_type_id"
+                                 baseTableName="orders"
+                                 constraintName="fk_orders_delivery_type_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="delivery_types"/>
+        <addForeignKeyConstraint baseColumnNames="person_id"
+                                 baseTableName="orders"
+                                 constraintName="fk_orders_person_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="persons"/>
+        <createTable tableName="order_positions"
+                     remarks="Order positions table">
+            <column name="id" type="bigserial">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="item_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="item_id"
+                                 baseTableName="order_positions"
+                                 constraintName="fk_order_positions_item_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="items"/>
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="order_positions"
+                                 constraintName="fk_order_positions_order_id"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="orders"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: expandconverter
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/expandconverter?currentSchema=expandconverter
+    username: expandconverter
+    password: expandconverter
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  liquibase:
+    url: jdbc:postgresql://127.0.0.1:5432/expandconverter?currentSchema=expandconverter
+    user: expandconverter
+    password: expandconverter
+    change-log: classpath:db/changelog/changelog-master.xml
+    enabled: true
