@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  # БД
+  db:
+    image: postgres:15-alpine
+    container_name: db
+    hostname: db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: "Europe/Moscow"
+      POSTGRES_USER: expandconverter
+      POSTGRES_PASSWORD: expandconverter
+      POSTGRES_DB: expandconverter
+      PGDATA: /var/lib/postgresql/data/expandconverter
+    volumes:
+      - postgres-expandconverter:/var/lib/postgresql/data/expandconverter
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: ["-c", "shared_buffers=256MB", "-c", "max_connections=200"]
+    networks:
+      - expandconverter
+    healthcheck:
+      test: PGPASSWORD=expandconverter psql -d expandconverter -U expandconverter -w -c '\q'
+      interval: 20s
+      timeout: 10s
+
+  # PgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "9090:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: expandconverter@expandconverter.ru
+      PGADMIN_DEFAULT_PASSWORD: expandconverter
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    depends_on:
+      - db
+    networks:
+      - expandconverter
+
+networks:
+  expandconverter:
+    driver: bridge
+
+volumes:
+  postgres-expandconverter:
+    external: false
+  pgadmindata:

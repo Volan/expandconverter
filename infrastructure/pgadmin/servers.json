@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "Postgres": {
+      "Name": "expandconverter",
+      "Port": 5432,
+      "Group": "Servers",
+      "SSLMode": "prefer",
+      "Username": "expandconverter",
+      "Host": "db",
+      "MaintenanceDB": "expandconverter"
+    }
+  }
+}
