@@ -1,1 +1,1 @@
-create schema if not exists expandconverter authorization nlmk;
+create schema if not exists expandconverter authorization expandconverter;
