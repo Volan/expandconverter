@@ -4,6 +4,7 @@
 # Структура директорий и файлов:
     expandconverter                         # Корень проекта
     ├── expandconverter                     # Основной проект по конвертации с API
+    ├── expandconverter                     # Проект демонстрации работы Spring GraphQL
     └── infrustructure                      # Проект для локальной инфраструктуры
 
 # Запуск локальной среды

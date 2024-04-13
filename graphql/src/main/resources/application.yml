@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: graphql
+  graphql:
+    graphiql:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/expandconverter?currentSchema=expandconverter
+    username: expandconverter
+    password: expandconverter
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true

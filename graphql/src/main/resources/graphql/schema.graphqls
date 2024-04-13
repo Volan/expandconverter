@@ -1,0 +1,56 @@
+type Query {
+    orders: [Order]
+}
+
+type Order {
+    id: ID
+    person: Person
+    positions: [OrderPosition]
+    deliveryType: DeliveryType
+}
+
+type DeliveryType {
+    id: ID
+    type: String
+}
+
+type OrderPosition {
+    id: ID
+    count: Int
+    item: Item
+}
+
+type Item {
+    id: ID
+    description: String
+    category: Category,
+    producer: Producer
+}
+
+type Producer {
+    id: ID
+    name: String
+    country: Country
+}
+
+type Country {
+    id: ID
+    name: String
+}
+
+type Category {
+    id: ID
+    description: String
+}
+
+type Person {
+    id: ID
+    firstName: String
+    lastName: String
+    address: Address
+}
+
+type Address {
+    id: ID
+    location: String
+}
