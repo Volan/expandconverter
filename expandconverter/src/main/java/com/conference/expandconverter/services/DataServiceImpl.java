@@ -53,38 +53,38 @@ public class DataServiceImpl implements DataService {
                              int country,
                              int producer) {
         ArrayList<Address> addressesArray = new ArrayList<>(persons);
-        for (int i = 0; i< persons; ++i) {
+        for (int i = 1; i <= persons; ++i) {
             addressesArray.add(addressRepository.save(new Address(ADDRESS + i)));
         }
         ArrayList<Person> personsArray = new ArrayList<>(persons);
-        for (int i = 0; i< persons; ++i) {
-            personsArray.add(personRepository.save(new Person(PERSON + i, PERSON + i, addressesArray.get(i))));
+        for (int i = 1; i <= persons; ++i) {
+            personsArray.add(personRepository.save(new Person(PERSON + i, PERSON + i, addressesArray.get(i - 1))));
         }
         ArrayList<Category> categoryArray = new ArrayList<>(category);
-        for (int i = 0; i< category; ++i) {
+        for (int i = 1; i <= category; ++i) {
             categoryArray.add(categoryRepository.save(new Category(CATEGORY + i)));
         }
         ArrayList<Country> countryArray = new ArrayList<>(country);
-        for (int i = 0; i< country; ++i) {
+        for (int i = 1; i <= country; ++i) {
             countryArray.add(countryRepository.save(new Country(COUNTRY + i)));
         }
         ArrayList<Producer> producerArray = new ArrayList<>(producer);
-        for (int i = 0; i< country; ++i) {
+        for (int i = 1; i <= country; ++i) {
             producerArray.add(producerRepository.save(new Producer(PRODUCER + i, countryArray.get(getRandom(country)))));
         }
         ArrayList<Item> itemsArray = new ArrayList<>(items);
-        for (int i = 0; i< items; ++i) {
+        for (int i = 1; i <= items; ++i) {
             itemsArray.add(itemRepository.save(new Item(ITEM + i, categoryArray.get(getRandom(category)), producerArray.get(getRandom(producer)))));
         }
         ArrayList<DeliveryType> deliveryTypeArray = new ArrayList<>(deliveryType);
-        for (int i = 0; i< category; ++i) {
+        for (int i = 1; i <= category; ++i) {
             deliveryTypeArray.add(deliveryTypeRepository.save(new DeliveryType(DELIVERY_TYPE + i)));
         }
         ArrayList<Order> ordersArray = new ArrayList<>(orders);
-        for (int i = 0; i< orders; ++i) {
+        for (int i = 1; i <= orders; ++i) {
             ordersArray.add(orderRepository.save(new Order(personsArray.get(getRandom(persons)), deliveryTypeArray.get(getRandom(deliveryType)))));
-            for (int j = 0; j < order_positions; ++j) {
-                orderPositionRepository.save(new OrderPosition(itemsArray.get(getRandom(items)), ordersArray.get(i).getId(), Long.valueOf(getRandom(100))));
+            for (int j = 0; j <= order_positions; ++j) {
+                orderPositionRepository.save(new OrderPosition(itemsArray.get(getRandom(items)), ordersArray.get(i - 1).getId(), Long.valueOf(getRandom(100))));
             }
         }
 
