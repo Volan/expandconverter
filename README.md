@@ -50,7 +50,7 @@ mvn compile
 http://localhost:8081/graphiql?path=/graphql
 ```
 Пример запроса всех данных
-```json
+```
 {
     orders {
         id
